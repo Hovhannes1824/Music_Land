@@ -27,7 +27,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import com.example.music_land.data.model.UserNote;
-import com.example.music_land.data.model.UserScore;
 
 public class SupabaseManager {
     private static final String TAG = "SupabaseManager";
@@ -35,7 +34,6 @@ public class SupabaseManager {
     
     // Таблицы
     private static final String NOTES_TABLE = "notes";
-    private static final String SCORES_TABLE = "scores";
     
     private String supabaseUrl;
     private String supabaseKey;
@@ -45,12 +43,6 @@ public class SupabaseManager {
     // Интерфейс для обратных вызовов при получении заметок
     public interface NotesCallback {
         void onNotesLoaded(List<UserNote> notes);
-        void onError(String errorMessage);
-    }
-    
-    // Интерфейс для обратных вызовов при получении списка лучших результатов
-    public interface LeaderboardCallback {
-        void onLeaderboardLoaded(List<UserScore> leaderboardUsers);
         void onError(String errorMessage);
     }
     
@@ -226,113 +218,6 @@ public class SupabaseManager {
                 } else {
                     String error = response.body() != null ? response.body().string() : "Неизвестная ошибка";
                     Log.e(TAG, "Ошибка удаления заметки: " + error);
-                    callback.onError("Ошибка сервера: " + error);
-                }
-            }
-        });
-    }
-    
-    // Сохранение результата теста
-    public void addUserScore(String userId, String userName, String genre, int score, SaveCallback callback) {
-        if (!isInitialized) {
-            callback.onError("Supabase не инициализирован");
-            return;
-        }
-        
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("user_id", userId);
-            jsonObject.put("user_name", userName);
-            jsonObject.put("genre", genre);
-            jsonObject.put("score", score);
-            jsonObject.put("date", System.currentTimeMillis());
-            
-            // Исправленный вызов для OkHttp3
-            final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-            RequestBody body = RequestBody.create(JSON, jsonObject.toString());
-            
-            Request request = new Request.Builder()
-                .url(supabaseUrl + "/rest/v1/" + SCORES_TABLE)
-                .post(body)
-                .addHeader("apikey", supabaseKey)
-                .addHeader("Authorization", "Bearer " + supabaseKey)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Prefer", "return=minimal")
-                .build();
-            
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "Ошибка сохранения результата: " + e.getMessage());
-                    callback.onError("Ошибка сети: " + e.getMessage());
-                }
-                
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if (response.isSuccessful()) {
-                        callback.onSuccess();
-                    } else {
-                        String error = response.body() != null ? response.body().string() : "Неизвестная ошибка";
-                        Log.e(TAG, "Ошибка сохранения результата: " + error);
-                        callback.onError("Ошибка сервера: " + error);
-                    }
-                }
-            });
-        } catch (JSONException e) {
-            Log.e(TAG, "Ошибка создания JSON: " + e.getMessage());
-            callback.onError("Ошибка создания запроса: " + e.getMessage());
-        }
-    }
-    
-    // Получение таблицы лидеров по жанру
-    public void getLeaderboardByGenre(String genre, int limit, LeaderboardCallback callback) {
-        if (!isInitialized) {
-            callback.onError("Supabase не инициализирован");
-            return;
-        }
-        
-        Request request = new Request.Builder()
-            .url(supabaseUrl + "/rest/v1/" + SCORES_TABLE + "?genre=eq." + genre + "&order=score.desc&limit=" + limit)
-            .get()
-            .addHeader("apikey", supabaseKey)
-            .addHeader("Authorization", "Bearer " + supabaseKey)
-            .build();
-        
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "Ошибка получения лидерборда: " + e.getMessage());
-                callback.onError("Ошибка сети: " + e.getMessage());
-            }
-            
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        String responseData = response.body().string();
-                        JSONArray jsonArray = new JSONArray(responseData);
-                        List<UserScore> scores = new ArrayList<>();
-                        
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            
-                            String userId = jsonObject.getString("user_id");
-                            String userName = jsonObject.getString("user_name");
-                            int score = jsonObject.getInt("score");
-                            int rank = i + 1;
-                            
-                            UserScore userScore = new UserScore(userId, userName, score, rank);
-                            scores.add(userScore);
-                        }
-                        
-                        callback.onLeaderboardLoaded(scores);
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Ошибка парсинга JSON: " + e.getMessage());
-                        callback.onError("Ошибка обработки данных: " + e.getMessage());
-                    }
-                } else {
-                    String error = response.body() != null ? response.body().string() : "Неизвестная ошибка";
-                    Log.e(TAG, "Ошибка получения лидерборда: " + error);
                     callback.onError("Ошибка сервера: " + error);
                 }
             }

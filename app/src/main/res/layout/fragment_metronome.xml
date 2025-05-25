@@ -84,7 +84,10 @@
                             android:inputType="number"
                             android:maxLength="3"
                             android:gravity="center"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:selectAllOnFocus="true"
+                            android:imeOptions="actionDone"
+                            android:importantForAutofill="no" />
 
                         <TextView
                             android:layout_width="wrap_content"

@@ -76,10 +76,17 @@ public class MetronomeFragment extends Fragment {
         tickTrack = SoundUtils.generateClick(50);
         
         // Настройка SeekBar для темпа
+        binding.tempoSeekBar.setMax(MAX_TEMPO - MIN_TEMPO);
         binding.tempoSeekBar.setProgress(tempo - MIN_TEMPO);
         updateTempoText();
         
         // Настройка поля ввода темпа
+        binding.tempoEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                validateAndUpdateTempo();
+            }
+        });
+
         binding.tempoEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -93,30 +100,10 @@ public class MetronomeFragment extends Fragment {
                     try {
                         int newTempo = Integer.parseInt(s.toString());
                         if (newTempo >= MIN_TEMPO && newTempo <= MAX_TEMPO) {
-                            // Обновляем только если значение изменилось
-                            if (tempo != newTempo) {
-                                tempo = newTempo;
-                                binding.tempoSeekBar.setProgress(tempo - MIN_TEMPO);
-                                
-                                // Сохраняем настройки
-                                sharedPreferences.edit().putInt(TEMPO_KEY, tempo).apply();
-                                
-                                // Если метроном запущен, обновляем его темп
-                                if (isMetronomeRunning) {
-                                    restartMetronome();
-                                }
-                            }
-                        } else {
-                            // Если значение вне допустимого диапазона, показываем сообщение
-                            Toast.makeText(requireContext(), 
-                                "Темп должен быть от " + MIN_TEMPO + " до " + MAX_TEMPO, 
-                                Toast.LENGTH_SHORT).show();
-                            // Возвращаем предыдущее корректное значение
-                            updateTempoText();
+                            updateTempoValue(newTempo);
                         }
-                    } catch (NumberFormatException e) {
-                        // Если введено некорректное число, возвращаем предыдущее значение
-                        updateTempoText();
+                    } catch (NumberFormatException ignored) {
+                        // Игнорируем некорректный ввод
                     }
                 }
             }
@@ -125,16 +112,9 @@ public class MetronomeFragment extends Fragment {
         binding.tempoSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tempo = progress + MIN_TEMPO;
-                updateTempoText();
-                
-                // Если метроном запущен, обновляем его темп
-                if (isMetronomeRunning) {
-                    restartMetronome();
+                if (fromUser) {
+                    updateTempoValue(progress + MIN_TEMPO);
                 }
-                
-                // Сохраняем настройки
-                sharedPreferences.edit().putInt(TEMPO_KEY, tempo).apply();
             }
 
             @Override
@@ -154,6 +134,41 @@ public class MetronomeFragment extends Fragment {
                 binding.startStopButton.setText("Остановить");
             }
         });
+    }
+
+    private void validateAndUpdateTempo() {
+        try {
+            String input = binding.tempoEditText.getText().toString();
+            if (!input.isEmpty()) {
+                int newTempo = Integer.parseInt(input);
+                if (newTempo < MIN_TEMPO || newTempo > MAX_TEMPO) {
+                    Toast.makeText(requireContext(),
+                            "Темп должен быть от " + MIN_TEMPO + " до " + MAX_TEMPO,
+                            Toast.LENGTH_SHORT).show();
+                    updateTempoText();
+                }
+            } else {
+                updateTempoText();
+            }
+        } catch (NumberFormatException e) {
+            updateTempoText();
+        }
+    }
+
+    private void updateTempoValue(int newTempo) {
+        if (tempo != newTempo) {
+            tempo = newTempo;
+            binding.tempoSeekBar.setProgress(tempo - MIN_TEMPO);
+            binding.tempoEditText.setText(String.valueOf(tempo));
+            
+            // Сохраняем настройки
+            sharedPreferences.edit().putInt(TEMPO_KEY, tempo).apply();
+            
+            // Если метроном запущен, обновляем его темп
+            if (isMetronomeRunning) {
+                restartMetronome();
+            }
+        }
     }
     
     private void updateTempoText() {

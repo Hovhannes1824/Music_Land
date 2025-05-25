@@ -20,14 +20,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_USER_EMAIL = "user_email";
     public static final String COLUMN_USER_SCORE = "user_score";
     
-    // Таблица рейтинга
-    public static final String TABLE_LEADERBOARD = "leaderboard";
-    public static final String COLUMN_LEADERBOARD_ID = "id";
-    public static final String COLUMN_LEADERBOARD_USER_ID = "user_id";
-    public static final String COLUMN_LEADERBOARD_DISPLAY_NAME = "display_name";
-    public static final String COLUMN_LEADERBOARD_SCORE = "score";
-    public static final String COLUMN_LEADERBOARD_RANK = "rank";
-    
     // Таблица уроков
     public static final String TABLE_LESSONS = "lessons";
     public static final String COLUMN_LESSON_ID = "id";
@@ -47,14 +39,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             COLUMN_USER_NAME + " TEXT, " +
             COLUMN_USER_EMAIL + " TEXT, " +
             COLUMN_USER_SCORE + " INTEGER DEFAULT 0)";
-    
-    private static final String SQL_CREATE_LEADERBOARD_TABLE = 
-            "CREATE TABLE " + TABLE_LEADERBOARD + " (" +
-            COLUMN_LEADERBOARD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_LEADERBOARD_USER_ID + " TEXT, " +
-            COLUMN_LEADERBOARD_DISPLAY_NAME + " TEXT, " +
-            COLUMN_LEADERBOARD_SCORE + " INTEGER, " +
-            COLUMN_LEADERBOARD_RANK + " INTEGER)";
     
     private static final String SQL_CREATE_LESSONS_TABLE = 
             "CREATE TABLE " + TABLE_LESSONS + " (" +
@@ -85,9 +69,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(SQL_CREATE_USERS_TABLE);
-            db.execSQL(SQL_CREATE_LEADERBOARD_TABLE);
             db.execSQL(SQL_CREATE_LESSONS_TABLE);
-            Log.d(TAG, "База данных успешно создана");
+            Log.d(TAG, "База данных создана успешно");
         } catch (Exception e) {
             Log.e(TAG, "Ошибка при создании базы данных: " + e.getMessage());
         }
@@ -95,10 +78,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // При обновлении версии базы данных удаляем старые таблицы и создаем новые
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LEADERBOARD);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LESSONS);
-        onCreate(db);
+        // При обновлении базы данных
+        try {
+            // Удаляем старые таблицы
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_LESSONS);
+            
+            // Создаем новые таблицы
+            onCreate(db);
+            Log.d(TAG, "База данных обновлена с версии " + oldVersion + " до версии " + newVersion);
+        } catch (Exception e) {
+            Log.e(TAG, "Ошибка при обновлении базы данных: " + e.getMessage());
+        }
     }
 } 

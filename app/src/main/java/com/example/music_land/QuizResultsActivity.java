@@ -125,7 +125,6 @@ public class QuizResultsActivity extends AppCompatActivity {
 
         // Сохраняем результаты в Firebase с учетом сложности
         if (genre != null && !genre.isEmpty()) {
-            saveScoreToFirebase(genre, difficulty, finalScore);
             saveProgressToFirestore(genre, difficulty, finalScore);
         }
 
@@ -199,35 +198,6 @@ public class QuizResultsActivity extends AppCompatActivity {
         });
     }
     
-    private void saveScoreToFirebase(String genre, String difficulty, int score) {
-        // Добавляем множитель в зависимости от сложности
-        float difficultyMultiplier = 1.0f;
-        if (difficulty != null) {
-            if (difficulty.equals("Средний")) {
-                difficultyMultiplier = 1.5f;
-            } else if (difficulty.equals("Сложный")) {
-                difficultyMultiplier = 2.0f;
-            }
-        }
-        
-        // Применяем множитель к счету
-        int adjustedScore = (int) (score * difficultyMultiplier);
-        
-        firestoreManager.addUserScore(genre, adjustedScore, new FirebaseAuthManager.AuthCallback() {
-            @Override
-            public void onSuccess() {
-                Toast.makeText(QuizResultsActivity.this, 
-                    "Результаты сохранены в лидерборде", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(String errorMessage) {
-                Toast.makeText(QuizResultsActivity.this, 
-                    "Ошибка при сохранении результатов: " + errorMessage, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void saveProgressToFirestore(String genre, String difficulty, int score) {
         com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) return;
