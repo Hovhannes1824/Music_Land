@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <component name="ProjectJdkTable">
+    <jdk version="2">
+      <name value="Embedded JDK" />
+      <type value="JavaSDK" />
+      <version value="version 17.0.6" />
+      <homePath value="$APPLICATION_HOME_DIR$/jbr" />
+      <roots>
+        <annotationsPath>
+          <root type="composite">
+            <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/jdkAnnotations.jar!/" type="simple" />
+          </root>
+        </annotationsPath>
+        <classPath>
+          <root type="composite">
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.base" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.compiler" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.datatransfer" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.desktop" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.instrument" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.logging" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.management" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.management.rmi" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.naming" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.net.http" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.prefs" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.rmi" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.scripting" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.security.jgss" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.security.sasl" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.smartcardio" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.sql" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.sql.rowset" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.transaction.xa" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.xml" type="simple" />
+            <root url="jrt://C:/Program Files/Android/Android Studio/jbr!/java.xml.crypto" type="simple" />
+          </root>
+        </classPath>
+        <javadocPath>
+          <root type="composite" />
+        </javadocPath>
+        <sourcePath>
+          <root type="composite" />
+        </sourcePath>
+      </roots>
+      <additional />
+    </jdk>
+  </component>
+</application> 

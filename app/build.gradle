@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
+
+android {
+    // Ваши текущие настройки Android
+    // Если их нет, будут добавлены базовые настройки
+    namespace "com.example.music_land"
+    compileSdkVersion 34
+    defaultConfig {
+        applicationId "com.example.music_land"
+        minSdkVersion 26
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    
+    buildFeatures {
+        viewBinding true
+    }
+    
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+    
+    // Добавляем собственный фильтр ресурсов для исключения проблемных PNG
+    aaptOptions {
+        ignoreAssetsPattern '!ic_hiphop_genre.png:!ic_pop_genre.png:!ic_metal_genre.png'
+    }
+    
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'com.cloudinary:cloudinary-android:2.3.1'
+    
+    // Google Play Services
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.android.gms:play-services-base:18.3.0'
+    
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    
+    // Основные зависимости Android
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // OkHttp dependencies - explicit version
+    implementation 'com.squareup.okhttp3:okhttp:3.14.9'
+    implementation 'com.squareup.okio:okio:2.10.0'
+    
+    // Gson для работы с JSON
+    implementation 'com.google.code.gson:gson:2.10.1'
+    
+    // Firebase зависимости
+    implementation platform('com.google.firebase:firebase-bom:32.7.4')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-storage'
+    
+    // Markwon для отображения Markdown
+    implementation 'io.noties.markwon:core:4.6.2'
+    implementation 'io.noties.markwon:html:4.6.2'
+    implementation 'io.noties.markwon:image-glide:4.6.2'
+    
+    implementation 'androidx.cardview:cardview:1.0.0'
+    
+    // AndroidX Test dependencies
+    androidTestImplementation 'androidx.test:core:1.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
+    
+    // ExoPlayer (Media3)
+    implementation 'androidx.media3:media3-exoplayer:1.2.1'
+    implementation 'androidx.media3:media3-ui:1.2.1'
+    implementation 'androidx.media3:media3-common:1.2.1'
+} 

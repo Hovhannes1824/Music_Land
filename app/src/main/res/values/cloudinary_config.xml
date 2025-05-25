@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Данные аккаунта Cloudinary -->
+    <string name="cloudinary_cloud_name">dfn1uny7b</string>
+    <string name="cloudinary_api_key">362988988551659</string>
+    <string name="cloudinary_api_secret">j5kGaNVhcAjvGoY_DoM3tuShUX4</string>
+</resources> 

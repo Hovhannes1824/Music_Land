@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Функция для проверки аутентификации и верификации email
+    function isUserVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+    
+    // Правила для коллекции пользователей
+    match /users/{userId} {
+      // Разрешаем создание только если email подтвержден
+      allow create: if request.auth != null && request.auth.uid == userId;
+      // Чтение и обновление только владельцу данных
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if false; // Запрещаем удаление
+    }
+    
+    // Правила для результатов (scores)
+    match /scores/{scoreId} {
+      allow read: if true; // Публичное чтение для таблицы лидеров
+      allow write: if isUserVerified(); // Запись только для подтвержденных пользователей
+    }
+    
+    // Правила для заметок
+    match /notes/{noteId} {
+      // Разрешаем все операции с заметками, если пользователь авторизован
+      // и является владельцем заметки
+      allow create: if request.auth != null && 
+                   request.resource.data.userId == request.auth.uid;
+      
+      allow read, update, delete: if request.auth != null && 
+                                 (resource == null || resource.data.userId == request.auth.uid);
+      
+      // Разрешаем запросы с любыми параметрами для владельца
+      allow list: if request.auth != null && 
+                 request.query.limit <= 100;
+    }
+    
+    // Правила для записей
+    match /recordings/{recordingId} {
+      allow read, write: if request.auth != null && 
+        request.auth.uid == resource.data.userId && 
+        isUserVerified();
+    }
+  }
+} 

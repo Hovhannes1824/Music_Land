@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "716751993279",
+    "project_id": "music-land-cadc9",
+    "storage_bucket": "music-land-cadc9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716751993279:android:2606be722688bc5c64c90a",
+        "android_client_info": {
+          "package_name": "com.example.music_land"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUuhWyP6AooxVSoJf349rMNyuHqjTfL7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/songTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название песни"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_marginBottom="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/songLyricsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Текст песни будет здесь..."
+            android:textSize="16sp"
+            android:lineSpacingMultiplier="1.2"/>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:id="@+id/editSongButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Редактировать"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/colorButtonAccent"
+            android:textColor="@color/colorButtonText"/>
+
+        <Button
+            android:id="@+id/dismissButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Закрыть"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:backgroundTint="@color/colorButtonAccent"
+            android:textColor="@color/colorButtonText"/>
+    </LinearLayout>
+</LinearLayout> 

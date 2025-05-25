@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/toolsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Инструменты"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Метроном -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/metronomeCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Метроном"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/ic_metronome"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp" />
+
+                <SeekBar
+                    android:id="@+id/tempoSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:max="208"
+                    android:progress="120" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="40" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tempoTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="120 BPM"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="248" />
+                </LinearLayout>
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Тип звука"
+                    android:layout_marginTop="8dp" />
+                    
+                <RadioGroup
+                    android:id="@+id/soundTypeRadioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp">
+                    
+                    <RadioButton
+                        android:id="@+id/toneRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Тон"
+                        android:checked="true" />
+                        
+                    <RadioButton
+                        android:id="@+id/clickRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Щелчок" />
+                        
+                    <RadioButton
+                        android:id="@+id/woodRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Блок" />
+                        
+                    <RadioButton
+                        android:id="@+id/bellRadioButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Звонок" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/startStopButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Запустить"
+                    android:backgroundTint="@color/colorButtonAccent"
+                    android:textColor="@color/colorButtonText" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Запись -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/recordingCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Запись"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/ic_microphone"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/recordingTimeTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="00:00"
+                    android:textSize="32sp"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/recordingTitleEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Название записи"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/recordButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Запись"
+                        android:layout_marginEnd="4dp"
+                        android:backgroundTint="@color/colorButtonAccent"
+                        android:textColor="@color/colorButtonText" />
+
+                    <Button
+                        android:id="@+id/playButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Воспроизвести"
+                        android:layout_marginStart="4dp"
+                        android:enabled="false"
+                        android:backgroundTint="@color/colorButtonAccent"
+                        android:textColor="@color/colorButtonText" />
+                </LinearLayout>
+                
+                <Button
+                    android:id="@+id/saveRecordingButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Сохранить запись"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    android:backgroundTint="@color/colorButtonAccent"
+                    android:textColor="@color/colorButtonText" />
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Сохраненные записи"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+                
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recordingsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Заметки -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/notesCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Заметки"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:drawableStart="@drawable/ic_notes"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp" />
+
+                <EditText
+                    android:id="@+id/notesEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="150dp"
+                    android:gravity="top|start"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="Введите заметки здесь..."
+                    android:padding="8dp" />
+
+                <Button
+                    android:id="@+id/saveNotesButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Сохранить"
+                    android:backgroundTint="@color/colorButtonAccent"
+                    android:textColor="@color/colorButtonText" />
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Сохраненные заметки"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp" />
+                
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView> 
